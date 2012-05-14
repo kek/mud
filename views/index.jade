@@ -3,6 +3,7 @@ script(src="/socket.io/socket.io.js")
 script(src="/javascripts/socket-test.js")
 pre
   div#output
-form#command_form
+form#command_form(action="javascript:submitCommand();")
   label Command:
     input#command(type="text")
+  input(type='submit')
