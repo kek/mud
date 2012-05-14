@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost');
+var socket = io.connect(location.origin);
 socket.on('news', function (data) {
   console.log("Got news:");
   console.log(data);
