@@ -11,3 +11,12 @@ a {
     border: 1px solid black;
     padding: 10px;
 }
+
+#command {
+    width: 400px;
+}
+
+#command_form {
+    margin-bottom: 10px;
+}
+
