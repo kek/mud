@@ -1,8 +1,7 @@
 h1= title
 script(src="/socket.io/socket.io.js")
-script(src="/javascripts/socket-test.js")
+script(src="/javascripts/client.js")
 pre
   div#output
 form#command_form(action="javascript:submitCommand();")
-  label Command:
-    input#command(type="text")
+  input#command(type="text", autocomplete="off")
