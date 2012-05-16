@@ -1,6 +1,5 @@
 body {
-    padding: 50px;
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    // font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -9,11 +8,10 @@ a {
 
 #output {
     border: 1px solid black;
-    padding: 10px;
 }
 
 #command {
-    width: 400px;
+    width: 100%;
 }
 
 #command_form {
