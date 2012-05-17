@@ -1,21 +1,32 @@
-var players = new Array();
-players.findByName = function(name) {
-  return this.filter (function (x) {
-    return x.name == name;
-  });
+function PlayerList () {
+  this.findByName = function (name) {
+    return this.filter (function (x) {
+      return x.name == name;
+    })[0];
+  }
 }
+PlayerList.prototype = new Array();
+exports.PlayerList = PlayerList;
+
+function World () {
+  this.players = new PlayerList();
+}
+exports.World = World;
 
 function Player () {
   this.name = "Player" + Math.round(Math.random() * 1000);
   this.location = 1;
 }
+exports.Player = Player;
 
 exports.start = function (io) {
+  var world = new World();
+
   io.sockets.on('connection', function (socket) {
     socket.emit('news', { news: 'Connected!' });
 
     socket.player = new Player();
-    players.push(socket.player);
+    world.players.push(socket.player);
     socket.emit('news', { news: "Welcome, " + socket.player.name });
 
     socket.on('command', function (data) {
@@ -37,10 +48,4 @@ exports.start = function (io) {
     });
   });
 };
-
-
-    // socket.on('message', function (data) {
-    //   console.log("Got message:");
-    //   console.log(data);
-    // });
 
