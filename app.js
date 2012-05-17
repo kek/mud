@@ -31,5 +31,4 @@ app.get('/', routes.index);
 app.listen(19000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 
-var game = require("./game");
-game.start(io);
+require("./game").start(io);
