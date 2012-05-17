@@ -22,8 +22,10 @@ vows.describe("Create world and players").addBatch({
       var p = world.players.findByName("Unknown");
 
       assert.equal (p, undefined);
+    },
+    'playerlist toString is not empty': function (world) {
+      var s = world.players.toString();
+      assert.notEqual (s, "");
     }
-
-
   }
 }).run();
