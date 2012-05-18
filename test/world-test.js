@@ -34,6 +34,12 @@ vows.describe("Create world and players").addBatch({
       var player = world.players.findByRoom(room)[0];
 
       assert.equal(world.players[0], player)
+    },
+    'the room can be found by its name': function (world) {
+      var room = world.rooms[0];
+      var found = world.rooms.findFirstByName("The lobby");
+
+      assert.equal("The lobby", found.name);
     }
   }
 }).run();
