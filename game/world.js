@@ -64,13 +64,6 @@ var Room = function (world, name, description) {
 var World = function () {
   this.players = new PlayerList();
   this.rooms = new RoomList();
-
-  this.addPlayer = function (room, socket) {
-    var player = new Player(room, socket);
-    this.players.push(player);
-    
-    return player;
-  };
 };
 
 var Player = function (room, socket) {
