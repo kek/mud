@@ -1,14 +1,14 @@
 var vows = require('vows'), assert = require('assert');
 
 var world = require('../game/world');
+var mocks = require('./mocks');
 
 vows.describe("Create world and players").addBatch({
   'when creating the world and adding a player': {
     topic: function () {
       var w = new world.World();
-      var lobby = new world.Room("The lobby", "This is a big room");
-      w.rooms.push(lobby);
-      w.players.push(new world.Player(lobby));
+      var lobby = new world.Room(w, "The lobby", "This is a big room");
+      var player = new world.Player(lobby, new mocks.Socket());
       return w;
     },
     'the world has a player': function (world) {
@@ -40,6 +40,13 @@ vows.describe("Create world and players").addBatch({
       var found = world.rooms.findFirstByName("The lobby");
 
       assert.equal("The lobby", found.name);
+    },
+    'broadcast doesn\'t completely fail': function (world) {
+      var room = world.rooms[0];
+      var player = world.players[0];
+      room.broadcast(world, player, "Hejsan");
+
+      assert.equal(true, true);
     }
   }
 }).run();

@@ -7,38 +7,42 @@ exports.start = function (io) {
   io.sockets.on('connection', function (socket) {
     socket.emit('news', { news: 'Connected! Available commands: say, who, look.' });
 
-    var player = gameWorld.addPlayer(gameWorld.rooms.findFirstByName("The lobby"));
-    socket.emit('news', { news: "Welcome, " + player.name });
+    var lobby = gameWorld.rooms.findFirstByName("The lobby");
+    var player = new world.Player(lobby, socket);
+    player.message("Welcome, " + player.name);
+    player.message(player.room.look());
 
     socket.on('command', function (data) {
       input = data.command;
 
       words = input.split(" ");
       verb = words.shift();
-      rest = words.join(" ");
+      complement = words.join(" ");
 
       dispatcher = {
-        "say": function () {
-          socket.emit('news', { news: 'You say: ' + rest });
-          socket.broadcast.emit('news', { news: player.name + ": " + rest});
+        "say": function (actor, complement) {
+          actor.message("You say: " + complement);
+          actor.room.broadcast(actor, actor.name + ": " + complement);
         },
-        "who": function () {
-          socket.emit('news', { news: gameWorld.players.toString() });
+        "who": function (actor, complement) {
+          actor.message(actor.room.world.players.toString());
         },
-        "look": function () {
-          socket.emit('news', { news: player.room.look(gameWorld) });
+        "look": function (actor, complement) {
+          actor.message(actor.room.look());
         }
       };
 
       player.room.exits.map(function (exit) {
-        dispatcher[exit.direction] = function () {
-          player.room = exit.room;
-          socket.emit('news', { news: player.room.look(gameWorld) });
+        dispatcher[exit.direction] = function (actor, complement) {
+          actor.room.broadcast(player, player.name + " leaves.");
+          actor.room = exit.room;
+          exit.room.broadcast(player, player.name + " has arrived.");
+          actor.message(actor.room.look());
         }
       });
 
       if(dispatcher[verb]) {
-        dispatcher[verb]();
+        dispatcher[verb](player, complement);
       } else {
         socket.emit('news', { news: 'Unknown command.' });      
       }
