@@ -1,20 +1,26 @@
 exports.World = function () {
   this.players = new exports.PlayerList();
-
+  this.rooms = [];
 }
 
-exports.Player = function () {
+exports.Player = function (location) {
   this.name = "Player" + Math.round(Math.random() * 1000);
-  this.location = 1;
+  this.location = location;
 }
 
 exports.PlayerList = function () {
-  this.findByName = function (name) {
+  this.findFirstByName = function (name) {
     return this.filter (function (p) {
       return p.name == name;
     })[0];
   };
 
+  this.findByLocation = function (room) {
+    return this.filter (function (p) {
+      return p.location == room;
+    });
+  }
+  
   this.toString = function () {
     return this.map(function (p) {
       return p.name;
@@ -32,8 +38,11 @@ exports.Room = function (name, description) {
     this.exits.push (new exports.Exit(direction, room));
   }
 
-  this.look = function () {
+  this.look = function (world) {
     return this.name + "\n" + this.description + "\n" +
+      world.players.findByLocation(this).map(function (visitor) {
+        return visitor.name + " is here.\n";
+      }) +
       "Exits: " + this.exits.map(function (exit) {
         return exit.direction
       }).join(" ");
@@ -56,8 +65,7 @@ exports.start = function (io) {
   io.sockets.on('connection', function (socket) {
     socket.emit('news', { news: 'Connected! Available commands: say, who, look.' });
 
-    socket.player = new exports.Player();
-    socket.player.location = lobby;
+    socket.player = new exports.Player(lobby);
     world.players.push(socket.player);
     socket.emit('news', { news: "Welcome, " + socket.player.name });
 
@@ -77,14 +85,14 @@ exports.start = function (io) {
           socket.emit('news', { news: world.players.toString() });
         },
         "look": function () {
-          socket.emit('news', { news: socket.player.location.look() });
+          socket.emit('news', { news: socket.player.location.look(world) });
         }
       };
 
       socket.player.location.exits.map(function (exit) {
         dispatcher[exit.direction] = function () {
           socket.player.location = exit.room;
-          socket.emit('news', { news: socket.player.location.look() });
+          socket.emit('news', { news: socket.player.location.look(world) });
         }
       });
       
