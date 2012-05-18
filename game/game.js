@@ -1,19 +1,13 @@
 var world = require('./world')
+var setup = require('./setup')
 
 exports.start = function (io) {
-  var gameWorld = new world.World();
-  var lobby = new world.Room("The lobby", "You are standing in the lobby.");
-  var janitor = new world.Room("The janitor's room", "This room is filled with cleaning tools.");
-  gameWorld.rooms.push(lobby);
-  gameWorld.rooms.push(janitor);
-  lobby.addExit("north", janitor);
-  janitor.addExit("south", lobby);
+  var gameWorld = setup.setupWorld();
 
   io.sockets.on('connection', function (socket) {
     socket.emit('news', { news: 'Connected! Available commands: say, who, look.' });
 
-    var player = new world.Player(lobby);
-    gameWorld.players.push(player);
+    var player = gameWorld.addPlayer(gameWorld.rooms.findFirstByName("The lobby"));
     socket.emit('news', { news: "Welcome, " + player.name });
 
     socket.on('command', function (data) {
