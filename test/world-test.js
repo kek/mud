@@ -30,12 +30,10 @@ vows.describe("Create world and players").addBatch({
       assert.notEqual (s, "");
     },
     'the player can be found in the room': function (world) {
-      room = world.rooms[0];
-      player = world.players.findByLocation(room)[0]
+      var room = world.rooms[0];
+      var player = world.players.findByLocation(room)[0];
 
       assert.equal(world.players[0], player)
     }
   }
-    
-      
 }).run();

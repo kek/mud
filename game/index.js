@@ -65,9 +65,9 @@ exports.start = function (io) {
   io.sockets.on('connection', function (socket) {
     socket.emit('news', { news: 'Connected! Available commands: say, who, look.' });
 
-    socket.player = new exports.Player(lobby);
-    world.players.push(socket.player);
-    socket.emit('news', { news: "Welcome, " + socket.player.name });
+    var player = new exports.Player(lobby);
+    world.players.push(player);
+    socket.emit('news', { news: "Welcome, " + player.name });
 
     socket.on('command', function (data) {
       input = data.command;
@@ -79,20 +79,20 @@ exports.start = function (io) {
       dispatcher = {
         "say": function () {
           socket.emit('news', { news: 'You say: ' + rest });
-          socket.broadcast.emit('news', { news: socket.player.name + ": " + rest});
+          socket.broadcast.emit('news', { news: player.name + ": " + rest});
         },
         "who": function () {
           socket.emit('news', { news: world.players.toString() });
         },
         "look": function () {
-          socket.emit('news', { news: socket.player.location.look(world) });
+          socket.emit('news', { news: player.location.look(world) });
         }
       };
 
-      socket.player.location.exits.map(function (exit) {
+      player.location.exits.map(function (exit) {
         dispatcher[exit.direction] = function () {
-          socket.player.location = exit.room;
-          socket.emit('news', { news: socket.player.location.look(world) });
+          player.location = exit.room;
+          socket.emit('news', { news: player.location.look(world) });
         }
       });
       
