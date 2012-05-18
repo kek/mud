@@ -1,15 +1,15 @@
 var vows = require('vows'), assert = require('assert');
 
-var game = require('../game');
+var world = require('../game/world');
 
 vows.describe("Create world and players").addBatch({
   'when creating the world and adding a player': {
     topic: function () {
-      var world = new game.World();
-      world.rooms.push(new game.Room("The lobby", "This is a big room"));
-      var lobby = world.rooms[0];
-      world.players.push(new game.Player(lobby));
-      return world;
+      var w = new world.World();
+      var lobby = new world.Room("The lobby", "This is a big room");
+      w.rooms.push(lobby);
+      w.players.push(new world.Player(lobby));
+      return w;
     },
     'the world has a player': function (world) {
       assert.greater (world.players.length, 0);
@@ -31,7 +31,7 @@ vows.describe("Create world and players").addBatch({
     },
     'the player can be found in the room': function (world) {
       var room = world.rooms[0];
-      var player = world.players.findByLocation(room)[0];
+      var player = world.players.findByRoom(room)[0];
 
       assert.equal(world.players[0], player)
     }

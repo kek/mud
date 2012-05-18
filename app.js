@@ -26,9 +26,12 @@ app.configure('production', function(){
 
 app.get('/', routes.index);
 
-// Socket.IO
+// Start
 
-app.listen(19000);
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+game = require("./game");
 
-require("./game").start(io);
+if (require.main === module) {
+  app.listen(19000);
+  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+  game.start(io);
+}
