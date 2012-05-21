@@ -54,9 +54,8 @@ vows.describe("Create world and players").addBatch({
     'dispatcher for room has exits': function (world) {
       var room = world.rooms[0];
       var roomDispatcher = new Dispatcher(room);
-      console.log(roomDispatcher);
       
       assert.notEqual(roomDispatcher["north"], undefined)
     }
   }
-}).run();
+}).export(module);

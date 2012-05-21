@@ -12,17 +12,13 @@ module.exports = function (room) {
     actor.message(actor.room.look());
   }
 
-  console.log("In Dispatcher init");
   var myself = this;
   room.exits.map(function (exit) {
     myself[exit.direction] = function (actor, complement) {
-      console.log("In Dispatcher exit adder");
       actor.room.broadcast(actor, actor.name + " leaves.");
       actor.room = exit.room;
       exit.room.broadcast(actor, actor.name + " has arrived.");
       actor.message(actor.room.look());
-      console.log("Adding exit action for " + exit.direction);
-      
     }
   });
 };
