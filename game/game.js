@@ -1,5 +1,6 @@
 var world = require('./world')
 var setup = require('./setup')
+var Dispatcher = require('./dispatcher');
 
 exports.start = function (io) {
   var gameWorld = setup.setupWorld();
@@ -19,27 +20,8 @@ exports.start = function (io) {
       verb = words.shift();
       complement = words.join(" ");
 
-      dispatcher = {
-        "say": function (actor, complement) {
-          actor.message("You say: " + complement);
-          actor.room.broadcast(actor, actor.name + ": " + complement);
-        },
-        "who": function (actor, complement) {
-          actor.message(actor.room.world.players.toString());
-        },
-        "look": function (actor, complement) {
-          actor.message(actor.room.look());
-        }
-      };
-
-      player.room.exits.map(function (exit) {
-        dispatcher[exit.direction] = function (actor, complement) {
-          actor.room.broadcast(player, player.name + " leaves.");
-          actor.room = exit.room;
-          exit.room.broadcast(player, player.name + " has arrived.");
-          actor.message(actor.room.look());
-        }
-      });
+      var dispatcher = new Dispatcher(player.room)
+      console.log(dispatcher);
 
       if(dispatcher[verb]) {
         dispatcher[verb](player, complement);

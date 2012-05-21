@@ -2,12 +2,15 @@ var vows = require('vows'), assert = require('assert');
 
 var world = require('../game/world');
 var mocks = require('./mocks');
+var Dispatcher = require('../game/dispatcher');
 
 vows.describe("Create world and players").addBatch({
   'when creating the world and adding a player': {
     topic: function () {
       var w = new world.World();
       var lobby = new world.Room(w, "The lobby", "This is a big room");
+      var room2 = new world.Room(w, "Another room", "This is another room");
+      lobby.addExit("north", room2);
       var player = new world.Player(lobby, new mocks.Socket());
       return w;
     },
@@ -47,6 +50,13 @@ vows.describe("Create world and players").addBatch({
       room.broadcast(world, player, "Hejsan");
 
       assert.equal(true, true);
+    },
+    'dispatcher for room has exits': function (world) {
+      var room = world.rooms[0];
+      var roomDispatcher = new Dispatcher(room);
+      console.log(roomDispatcher);
+      
+      assert.notEqual(roomDispatcher["north"], undefined)
     }
   }
 }).run();
