@@ -8,6 +8,12 @@ a {
 
 #output {
     border: 1px solid black;
+    float: left;
+    width: 50%;
+}
+
+#info {
+    width: 50%;
 }
 
 #command {

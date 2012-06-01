@@ -1,19 +1,23 @@
 var socket = io.connect(location.origin);
 
 window.onload = function () {
-  $('#output')[0].innerHTML += "Starting...\n";
+  $('#output').append("Starting...\n");
   // socket.emit('command', {command: 'Test command' });
 
-  $('#command')[0].focus();
+  $('#command').focus();
 }
 
 socket.on('news', function (data) {
-  $('#output')[0].innerHTML += data.news + "\n";
+  $('#output').append(data.news + "\n");
   window.scrollTo(0, document.body.scrollHeight);
 });
 
+socket.on('update', function(data) {
+  $('#info > #' + data.field).html(data.value);
+});
+
 function submitCommand () {
-  socket.emit('command', {command: $('#command')[0].value});
-  $('#command')[0].value = "";
+  socket.emit('command', {command: $('#command').val()});
+  $('#command').val("");
 }
 

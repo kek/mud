@@ -1,7 +1,9 @@
 h1= title
-script(src="/socket.io/socket.io.js")
-script(src="/javascripts/client.js")
 pre
   div#output
+  div#info
+    span#room ...
 form#command_form(action="javascript:submitCommand();")
   input#command(type="text", autocomplete="off")
+script(src="/socket.io/socket.io.js")
+script(src="/javascripts/client.js")
