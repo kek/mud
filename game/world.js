@@ -73,11 +73,14 @@ var Player = function (room, socket) {
 
   this.message = function (text) {
     socket.emit('news', { news: text });
+    socket.emit('update', { field: 'room', value: this.room.name });
   }
 
   this.room.world.players.push(this);
 };
 
-exports.Room = Room;
-exports.Player = Player;
-exports.World = World;
+exports.extend = function(what) {
+  what.Room = Room;
+  what.Player = Player;
+  what.World = World;
+}

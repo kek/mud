@@ -1,6 +1,6 @@
-var world = require('./world')
+require('./world').extend(root);
+require('./dispatcher').extend(root);
 var setup = require('./setup')
-var Dispatcher = require('./dispatcher');
 
 exports.start = function (io) {
   var gameWorld = setup.setupWorld();
@@ -9,7 +9,7 @@ exports.start = function (io) {
     socket.emit('news', { news: 'Connected! Available commands: say, who, look.' });
 
     var lobby = gameWorld.rooms.findFirstByName("The lobby");
-    var player = new world.Player(lobby, socket);
+    var player = new Player(lobby, socket);
     player.message("Welcome, " + player.name);
     player.message(player.room.look());
 
@@ -21,7 +21,9 @@ exports.start = function (io) {
       complement = words.join(" ");
 
       var dispatcher = new Dispatcher(player.room)
-      console.log(dispatcher);
+      //      console.log(dispatcher);
+      console.log(dispatcher.commandList());
+      console.log("Sådärja");
 
       if(dispatcher[verb]) {
         dispatcher[verb](player, complement);

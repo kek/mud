@@ -1,17 +1,17 @@
 var vows = require('vows'), assert = require('assert');
 
-var world = require('../game/world');
+require('../game/world').extend(root);
+require('../game/dispatcher').extend(root);
 var mocks = require('./mocks');
-var Dispatcher = require('../game/dispatcher');
 
 vows.describe("Create world and players").addBatch({
   'when creating the world and adding a player': {
     topic: function () {
-      var w = new world.World();
-      var lobby = new world.Room(w, "The lobby", "This is a big room");
-      var room2 = new world.Room(w, "Another room", "This is another room");
+      var w = new World();
+      var lobby = new Room(w, "The lobby", "This is a big room");
+      var room2 = new Room(w, "Another room", "This is another room");
       lobby.addExit("north", room2);
-      var player = new world.Player(lobby, new mocks.Socket());
+      var player = new Player(lobby, new mocks.Socket());
       return w;
     },
     'the world has a player': function (world) {
@@ -56,6 +56,13 @@ vows.describe("Create world and players").addBatch({
       var roomDispatcher = new Dispatcher(room);
       
       assert.notEqual(roomDispatcher["north"], undefined)
+    },
+    'dispatcher for room has command list': function (world) {
+      var room = world.rooms[0];
+      var roomDispatcher = new Dispatcher(room);
+
+      assert.notEqual(roomDispatcher.commandList(), "");
+      assert.equal(typeof roomDispatcher.commandList(), "string");
     }
   }
 }).export(module);
