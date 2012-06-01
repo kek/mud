@@ -22,7 +22,7 @@ exports.start = function (io) {
 
       var dispatcher = new Dispatcher(player.room)
       //      console.log(dispatcher);
-      console.log(dispatcher.commandList());
+//      console.log(dispatcher.commandList());
       console.log("Sådärja");
 
       if(dispatcher[verb]) {

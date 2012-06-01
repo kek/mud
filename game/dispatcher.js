@@ -19,10 +19,10 @@ var Dispatcher = function (room) {
     actor.message(target.name);
   };
 
-//  this["help"] = function(actor, complement) {
-//    actor.message("help");
+  this["help"] = function(actor, complement) {
+    actor.message("ok");
 //    actor.message(self.commandList());
-//  };
+  };
 
   room.exits.map(function (exit) {
     self[exit.direction] = function (actor, complement) {
