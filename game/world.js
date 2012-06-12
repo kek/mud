@@ -84,5 +84,3 @@ exports.extend = function(what) {
   what.Player = Player;
   what.World = World;
 };
-
-console.log(Object.keys(module.exports));

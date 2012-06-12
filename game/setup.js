@@ -10,4 +10,4 @@ exports.setupWorld = function () {
   graveyard.addExit("up", lobby);
 
   return world;
-}
+};

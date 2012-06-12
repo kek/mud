@@ -20,11 +20,8 @@ exports.start = function (io) {
       complement = words.join(" ");
 
       var dispatcher = new Dispatcher(player);
-      //      console.log(dispatcher);
-//      console.log(dispatcher.commandList());
-      console.log("Sådärja");
 
-      if(dispatcher.verbs[verb]) {
+      if(dispatcher.has(verb)) {
         dispatcher.act(verb, player, complement);
       } else {
         socket.emit('news', { news: 'Unknown command.' });      
@@ -32,5 +29,5 @@ exports.start = function (io) {
 
     });
   });
-}
+};
 
