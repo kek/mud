@@ -1,7 +1,7 @@
 var express = require('express'),
-    routes = require('./routes');
-var app = module.exports = express.createServer();
-var io = require('socket.io').listen(app);
+    routes = require('./routes'),
+    app = module.exports = express.createServer(),
+    io = require('socket.io').listen(app);
 
 // Configuration
 
@@ -32,6 +32,7 @@ game = require("./game");
 
 if (require.main === module) {
   app.listen(19000);
-  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+  console.log("Express server listening on port %d in %s mode",
+              app.address().port, app.settings.env);
   game.start(io);
 }

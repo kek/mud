@@ -55,14 +55,7 @@ vows.describe("Create world and players").addBatch({
       var room = world.rooms[0];
       var roomDispatcher = new Dispatcher(room);
       
-      assert.notEqual(roomDispatcher["north"], undefined)
-    },
-    'dispatcher for room has command list': function (world) {
-      var room = world.rooms[0];
-      var roomDispatcher = new Dispatcher(room);
-
-      assert.notEqual(roomDispatcher.commandList(), "");
-      assert.equal(typeof roomDispatcher.commandList(), "string");
+      assert.notEqual(roomDispatcher.verbs["north"], undefined)
     }
   }
 }).export(module);

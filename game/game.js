@@ -1,9 +1,8 @@
 require('./world').extend(root);
 require('./dispatcher').extend(root);
-var setup = require('./setup')
 
 exports.start = function (io) {
-  var gameWorld = setup.setupWorld();
+  var gameWorld = (require('./setup')).setupWorld();
 
   io.sockets.on('connection', function (socket) {
     socket.emit('news', { news: 'Connected! Available commands: say, who, look.' });
@@ -20,13 +19,13 @@ exports.start = function (io) {
       verb = words.shift();
       complement = words.join(" ");
 
-      var dispatcher = new Dispatcher(player.room)
+      var dispatcher = new Dispatcher(player.room);
       //      console.log(dispatcher);
 //      console.log(dispatcher.commandList());
       console.log("Sådärja");
 
-      if(dispatcher[verb]) {
-        dispatcher[verb](player, complement);
+      if(dispatcher.verbs[verb]) {
+        dispatcher.act(verb, player, complement);
       } else {
         socket.emit('news', { news: 'Unknown command.' });      
       }

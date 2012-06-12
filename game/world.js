@@ -10,7 +10,7 @@ var ThingList = function () {
       return p.name;
     }).join(" ");
   };
-}
+};
 ThingList.prototype = new Array();
 
 var PlayerList = function () {
@@ -23,7 +23,7 @@ var PlayerList = function () {
 PlayerList.prototype = new ThingList();
 
 var RoomList = function () {
-}
+};
 RoomList.prototype = new ThingList();
 
 var Exit = function (direction, room) {
@@ -39,7 +39,7 @@ var Room = function (world, name, description) {
 
   this.addExit = function (direction, room) {
     this.exits.push (new Exit(direction, room));
-  }
+  };
 
   this.look = function () {
     return this.name + "\n" + this.description + "\n" +
@@ -47,16 +47,16 @@ var Room = function (world, name, description) {
         return visitor.name + " is here.\n";
       }).join("") +
     "Exits: " + this.exits.map(function (exit) {
-      return exit.direction
+      return exit.direction;
     }).join(" ");
-  }
+  };
 
   this.broadcast = function(actor, text) {
     this.world.players.findByRoom(this).filter(function(p) {
       return ( p != actor );
     }).map(function (p) {
       p.message(text);
-    })
+    });
   };
   this.world.rooms.push(this);
 };
@@ -74,7 +74,7 @@ var Player = function (room, socket) {
   this.message = function (text) {
     socket.emit('news', { news: text });
     socket.emit('update', { field: 'room', value: this.room.name });
-  }
+  };
 
   this.room.world.players.push(this);
 };
@@ -83,4 +83,4 @@ exports.extend = function(what) {
   what.Room = Room;
   what.Player = Player;
   what.World = World;
-}
+};
