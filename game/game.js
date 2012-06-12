@@ -16,7 +16,7 @@ exports.start = function (io) {
       input = data.command;
 
       words = input.split(" ");
-      verb = words.shift();
+      verb = words.shift().toLowerCase();
       complement = words.join(" ");
 
       var dispatcher = new Dispatcher(player.room);
