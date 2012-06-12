@@ -15,11 +15,15 @@ exports.start = function (io) {
     socket.on('command', function (data) {
       input = data.command;
 
+      console.log(input);
+
       words = input.split(" ");
       verb = words.shift().toLowerCase();
-      complement = words.join(" ");
+      complement = words.join(" "); // words.join(" ");
 
       var dispatcher = new Dispatcher(player);
+
+      player.message("> " + verb + " " + complement);
 
       if(dispatcher.has(verb)) {
         dispatcher.act(verb, player, complement);

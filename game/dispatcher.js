@@ -1,25 +1,25 @@
 var Dispatcher = function (actor) {
   var self = this;
 
-  var verbs = [];
+  var verbs = {
+    "say": function (complement) {
+      actor.message("You say: " + complement);
+      actor.room.broadcast(actor, actor.name + ": " + complement);
+    },
 
-  verbs["say"] = function (complement) {
-    actor.message("You say: " + complement);
-    actor.room.broadcast(actor, actor.name + ": " + complement);
+    "who": function (complement) {
+      actor.message(actor.room.world.players.toString());
+    },
+    
+    "look": function (complement) {
+      actor.message(actor.room.look());
+    },
+    
+    "help": function (complement) {
+      actor.message(Object.keys(verbs).join(", "));
+    }
   };
-
-  verbs["who"] = function (complement) {
-    actor.message(actor.room.world.players.toString());
-  };
-
-  verbs["look"] = function (complement) {
-    actor.message(actor.room.look());
-  };
-
-  verbs["help"] = function (complement) {
-    actor.message(Object.keys(verbs).join(", "));
-  };
-
+    
   actor.room.exits.map(function (exit) {
     verbs[exit.direction] = function (complement) {
       actor.room.broadcast(actor, actor.name + " leaves.");
