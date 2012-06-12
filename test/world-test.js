@@ -51,9 +51,10 @@ vows.describe("Create world and players").addBatch({
 
       assert.equal(true, true);
     },
-    'dispatcher for room has exits': function (world) {
+    'dispatcher for player in room has exits': function (world) {
       var room = world.rooms[0];
-      var roomDispatcher = new Dispatcher(room);
+      var player = world.players[0];
+      var roomDispatcher = new Dispatcher(player);
       
       assert.notEqual(roomDispatcher.verbs["north"], undefined)
     }

@@ -19,7 +19,7 @@ exports.start = function (io) {
       verb = words.shift().toLowerCase();
       complement = words.join(" ");
 
-      var dispatcher = new Dispatcher(player.room);
+      var dispatcher = new Dispatcher(player);
       //      console.log(dispatcher);
 //      console.log(dispatcher.commandList());
       console.log("Sådärja");
