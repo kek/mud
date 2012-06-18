@@ -1,4 +1,6 @@
-require('./world').extend(root);
+var World = require('./world');
+var Player = require('./player');
+var Room = require('./room');
 
 exports.setupWorld = function () {
   var world = new World();

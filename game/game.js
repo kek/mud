@@ -1,5 +1,6 @@
-require('./world').extend(root);
-require('./dispatcher').extend(root);
+var World = require('./world');
+var Player = require('./player');
+var Dispatcher = require('./dispatcher');
 
 exports.start = function (io) {
   var gameWorld = (require('./setup')).setupWorld();

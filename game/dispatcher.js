@@ -40,6 +40,4 @@ var Dispatcher = function (actor) {
 };
 Dispatcher.prototype = new Array();
 
-exports.extend = function(what) {
-  what.Dispatcher = Dispatcher;
-}
+module.exports = Dispatcher;
