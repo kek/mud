@@ -1,7 +1,7 @@
 module.exports = function(what) {
-  what.World = require('./world');
-  what.Room = require('./room');
-  what.Player = require('./player');
-  what.Dispatcher = require('./dispatcher');
-  what.ThingList = require('./lists').ThingList;
+  what.World = require('./world.js');
+  what.Room = require('./room.js');
+  what.Player = require('./player.js');
+  what.Dispatcher = require('./dispatcher.js');
+  what.ThingList = require('./lists.js').ThingList;
 }
