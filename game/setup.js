@@ -7,6 +7,8 @@ exports.setupWorld = function () {
   var lobby = new Room(world, "The lobby", "You are standing in the lobby.");
   var janitor = new Room(world, "The janitor's room", "This room is filled with cleaning tools.");
   var graveyard = new Room(world, "The crypt", "You are dead.");
+  var wand = new Thing("wand", { 'zap': function(actor) { actor.message('zap') } });
+  lobby.things.push(wand);
   lobby.addExit("north", janitor);
   janitor.addExit("south", lobby);
   graveyard.addExit("up", lobby);

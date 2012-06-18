@@ -17,6 +17,19 @@ var Dispatcher = function (actor) {
     
     "help": function (complement) {
       actor.message(Object.keys(verbs).join(", "));
+    },
+
+    "get": function (complement) {
+      console.log(complement);
+      
+      thing = actor.room.things.findFirstByName(complement);
+      if (thing) {
+        actor.things.push(thing);
+        actor.message("You now have " + thing.name);
+        actor.room.things.splice(actor.room.things.indexOf(thing), 1);
+      } else {
+        actor.message("No such thing here.");
+      }
     }
   };
     

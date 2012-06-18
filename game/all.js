@@ -3,5 +3,6 @@ module.exports = function(what) {
   what.Room = require('./room.js');
   what.Player = require('./player.js');
   what.Dispatcher = require('./dispatcher.js');
+  what.Thing = require('./thing.js');
   what.ThingList = require('./lists.js').ThingList;
 }

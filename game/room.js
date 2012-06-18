@@ -1,3 +1,5 @@
+require('./all.js')(root);
+
 var Exit = function (direction, room) {
   this.room = room;
   this.direction = direction;
@@ -8,19 +10,23 @@ var Room = function (world, name, description) {
   this.name = name;
   this.description = description;
   this.world = world;
+  this.things = new ThingList();
 
   this.addExit = function (direction, room) {
     this.exits.push (new Exit(direction, room));
   };
 
   this.look = function () {
+    console.log(this.things.toString());
+    
     return this.name + "\n" + this.description + "\n" +
       this.world.players.findByRoom(this).map(function (visitor) {
         return visitor.name + " is here.\n";
       }).join("") +
     "Exits: " + this.exits.map(function (exit) {
       return exit.direction;
-    }).join(" ");
+    }).join(" ") + 
+    "\nThings: " + this.things.toString();
   };
 
   this.broadcast = function(actor, text) {

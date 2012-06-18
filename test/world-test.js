@@ -60,15 +60,14 @@ vows.describe("Create world and players").addBatch({
       
       assert.equal(true, dispatcher.has("north"));
     },
-//    'the player can pick up an object': function (world) {
-//      var player = world.players[0];
-//      var room = world.rooms[0];
-//      var dispatcher = new Dispatcher(player);
-//      var wand = new Thing({ 'zap': function(actor) { actor.message('zap') } });
-//      room.placeThing(wand);
-//
-//      dispatcher.act("get", "wand");
-//      
-//    }
+    'the player can pick up an object': function (world) {
+      var player = world.players[0];
+      var room = world.rooms[0];
+      var dispatcher = new Dispatcher(player);
+      var wand = new Thing("Magic wand", { 'zap': function(actor) { actor.message('zap') } });
+      room.things.push(wand);
+
+      dispatcher.act("get", "wand");
+    }
   }
 }).export(module);

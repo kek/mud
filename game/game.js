@@ -25,7 +25,7 @@ exports.start = function (io) {
       player.message("> " + verb + " " + complement);
 
       if(dispatcher.has(verb)) {
-        dispatcher.act(verb, player, complement);
+        dispatcher.act(verb, complement);
       } else {
         socket.emit('news', { news: 'Unknown command.' });      
       }
