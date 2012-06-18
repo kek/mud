@@ -28,6 +28,10 @@ var Dispatcher = function (actor) {
       } else {
         actor.message("No such thing here.");
       }
+    },
+
+    "inventory": function (complement) {
+      actor.message(actor.things.toString());
     }
   };
     
