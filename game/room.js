@@ -17,8 +17,6 @@ var Room = function (world, name, description) {
   };
 
   this.look = function () {
-    console.log(this.things.toString());
-    
     return this.name + "\n" + this.description + "\n" +
       this.world.players.findByRoom(this).map(function (visitor) {
         return visitor.name + " is here.\n";

@@ -20,8 +20,6 @@ var Dispatcher = function (actor) {
     },
 
     "get": function (complement) {
-      console.log(complement);
-      
       thing = actor.room.things.findFirstByName(complement);
       if (thing) {
         actor.things.push(thing);
