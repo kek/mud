@@ -1,6 +1,4 @@
-var World = require('./world');
-var Player = require('./player');
-var Dispatcher = require('./dispatcher');
+require('../game/all.js')(root);
 
 exports.start = function (io) {
   var gameWorld = (require('./setup')).setupWorld();
