@@ -44,6 +44,14 @@ var Dispatcher = function (actor) {
     };
   });
 
+  actor.things.map(function (thing) {
+    Object.keys(thing.interactions).map(function (key) {
+      verbs[key] = function(complement) {
+        thing.interactions[key](actor, complement);
+      };
+    });
+  });
+
   this.act = function (verb, complement) {
     return verbs[verb](complement);
   };

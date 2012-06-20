@@ -67,7 +67,17 @@ vows.describe("Create world and players").addBatch({
       var wand = new Thing("Magic wand", { 'zap': function(actor) { actor.message('zap') } });
       room.things.push(wand);
 
-      dispatcher.act("get", "wand");
+      dispatcher.act("get", "Magic wand");
+      assert.equal(player.things[0], wand);
+    },
+    'the player can act through an object': function (world) {
+      var player = world.players[0];
+      var room = world.rooms[0];
+      var wand = new Thing("Magic wand", { 'zap': function(actor) { actor.message('zap') } });
+      player.things.push(wand);
+      var dispatcher = new Dispatcher(player);
+
+      dispatcher.act("zap");
     }
   }
 }).export(module);
