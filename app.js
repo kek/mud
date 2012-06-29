@@ -28,7 +28,7 @@ app.get('/', routes.index);
 
 // Start
 
-game = require("./game");
+var game = require("./game");
 
 if (require.main === module) {
   app.listen(19000);

@@ -12,13 +12,13 @@ exports.start = function (io) {
     player.message(player.room.look());
 
     socket.on('command', function (data) {
-      input = data.command;
+      var input = data.command;
 
       console.log(input);
 
-      words = input.split(" ");
-      verb = words.shift().toLowerCase();
-      complement = words.join(" "); // words.join(" ");
+      var words = input.split(" ");
+      var verb = words.shift().toLowerCase();
+      var complement = words.join(" "); // words.join(" ");
 
       var dispatcher = new Dispatcher(player);
 
