@@ -8,14 +8,18 @@ a {
 
 #output {
     border: 1px solid black;
-    float: left;
-    width: 50%;
+    background: #ac9;
+    color: #030;
 }
 
 #info {
     position: fixed;
-    left: 55%;
+    right: 8px;
     top: 1em;
+    border: 1px solid black;
+    padding: 5px;
+    background: #efe;
+    color: #020;
 }
 
 #command {
@@ -25,4 +29,3 @@ a {
 #command_form {
     margin-bottom: 10px;
 }
-
