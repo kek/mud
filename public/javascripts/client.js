@@ -20,4 +20,3 @@ function submitCommand () {
   socket.emit('command', {command: $('#command').val()});
   $('#command').val("");
 }
-

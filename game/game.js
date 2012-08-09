@@ -29,8 +29,6 @@ exports.start = function (io) {
       } else {
         socket.emit('news', { news: 'Unknown command.' });      
       }
-
     });
   });
 };
-
