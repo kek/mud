@@ -1,13 +1,14 @@
-var vows = require('vows'), assert = require('assert');
+require('../game/all.js')(root);
 
-require('../game/world').extend(root);
-require('../game/dispatcher').extend(root);
-var mocks = require('./mocks');
+var vows = require('vows'), assert = require('assert');
+var setup = require('../game/setup');
+var mocks = require('./helpers/mocks');
 
 vows.describe("Create world and players").addBatch({
   'when creating the world and adding a player': {
     topic: function () {
       var w = new World();
+      
       var lobby = new Room(w, "The lobby", "This is a big room");
       var room2 = new Room(w, "Another room", "This is another room");
       lobby.addExit("north", room2);
@@ -36,7 +37,7 @@ vows.describe("Create world and players").addBatch({
       var room = world.rooms[0];
       var player = world.players.findByRoom(room)[0];
 
-      assert.equal(world.players[0], player)
+      assert.equal(world.players[0], player);
     },
     'the room can be found by its name': function (world) {
       var room = world.rooms[0];
@@ -54,9 +55,28 @@ vows.describe("Create world and players").addBatch({
     'dispatcher for player in room has exits': function (world) {
       var room = world.rooms[0];
       var player = world.players[0];
-      var roomDispatcher = new Dispatcher(player);
+      var dispatcher = new Dispatcher(player);
       
-      assert.equal(true, roomDispatcher.has("north"));
+      assert.equal(true, dispatcher.has("north"));
+    },
+    'the player can pick up an object': function (world) {
+      var player = world.players[0];
+      var room = world.rooms[0];
+      var dispatcher = new Dispatcher(player);
+      var wand = new Thing("Magic wand", { 'zap': function(actor) { actor.message('zap'); } });
+      room.things.push(wand);
+
+      dispatcher.act("get", "Magic wand");
+      assert.equal(player.things[0], wand);
+    },
+    'the player can act through an object': function (world) {
+      var player = world.players[0];
+      var room = world.rooms[0];
+      var wand = new Thing("Magic wand", { 'zap': function(actor) { actor.message('zap'); } });
+      player.things.push(wand);
+      var dispatcher = new Dispatcher(player);
+
+      dispatcher.act("zap");
     }
   }
 }).export(module);

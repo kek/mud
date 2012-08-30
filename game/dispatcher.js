@@ -17,6 +17,21 @@ var Dispatcher = function (actor) {
     
     "help": function (complement) {
       actor.message(Object.keys(verbs).join(", "));
+    },
+
+    "get": function (complement) {
+      thing = actor.room.things.findFirstByName(complement);
+      if (thing) {
+        actor.things.push(thing);
+        actor.message("You now have " + thing.name);
+        actor.room.things.splice(actor.room.things.indexOf(thing), 1);
+      } else {
+        actor.message("No such thing here.");
+      }
+    },
+
+    "inventory": function (complement) {
+      actor.message(actor.things.toString());
     }
   };
     
@@ -27,6 +42,14 @@ var Dispatcher = function (actor) {
       exit.room.broadcast(actor, actor.name + " has arrived.");
       actor.message(actor.room.look());
     };
+  });
+
+  actor.things.map(function (thing) {
+    Object.keys(thing.interactions).map(function (key) {
+      verbs[key] = function(complement) {
+        thing.interactions[key](actor, complement);
+      };
+    });
   });
 
   this.act = function (verb, complement) {
@@ -40,6 +63,4 @@ var Dispatcher = function (actor) {
 };
 Dispatcher.prototype = new Array();
 
-exports.extend = function(what) {
-  what.Dispatcher = Dispatcher;
-}
+module.exports = Dispatcher;

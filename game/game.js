@@ -1,5 +1,4 @@
-require('./world').extend(root);
-require('./dispatcher').extend(root);
+require('../game/all.js')(root);
 
 exports.start = function (io) {
   var gameWorld = (require('./setup')).setupWorld();
@@ -13,25 +12,23 @@ exports.start = function (io) {
     player.message(player.room.look());
 
     socket.on('command', function (data) {
-      input = data.command;
+      var input = data.command;
 
       console.log(input);
 
-      words = input.split(" ");
-      verb = words.shift().toLowerCase();
-      complement = words.join(" "); // words.join(" ");
+      var words = input.split(" ");
+      var verb = words.shift().toLowerCase();
+      var complement = words.join(" "); // words.join(" ");
 
       var dispatcher = new Dispatcher(player);
 
       player.message("> " + verb + " " + complement);
 
       if(dispatcher.has(verb)) {
-        dispatcher.act(verb, player, complement);
+        dispatcher.act(verb, complement);
       } else {
         socket.emit('news', { news: 'Unknown command.' });      
       }
-
     });
   });
 };
-

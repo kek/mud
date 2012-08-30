@@ -1,7 +1,11 @@
-Install node 0.6.17
+Install node
 
 Run npm install
 
 Run node app.js
 
 Visit http://localhost:19000/
+
+Testing:
+
+nodemon -w . -w game -w test app.js & vows *.js **/*.js **/*.jade -w
